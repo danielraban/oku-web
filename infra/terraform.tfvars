@@ -8,5 +8,7 @@ bucket_name  = "daniel-oku-web-prod"
 # domain_name         = "www.okuapp.com"
 # acm_certificate_arn = "arn:aws:acm:us-east-1:123456789012:certificate/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 
-# GitHub Actions OIDC deploy (same account must already have the GitHub OIDC provider, e.g. from oku-api)
-# github_repository = "your-org/oku-web"
+# GitHub Actions OIDC deploy (same account must already have the GitHub OIDC provider, e.g. from oku-api).
+# Set to your GitHub repo (org/name), apply Terraform, then set repo secret AWS_ROLE_ARN to output github_actions_deploy_role_arn.
+# Do not use oku-api's role here — each repo needs its own role or the trust policy will reject OIDC.
+github_repository = "danielraban/oku-web"

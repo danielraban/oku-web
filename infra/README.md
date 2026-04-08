@@ -24,8 +24,10 @@ This stack hosts the static Next.js export (`output: 'export'`) from the parent 
 
 ### GitHub Actions (merge to `main`)
 
-1. In **Terraform**, set `github_repository` to `your-org/oku-web` and `terraform apply` (requires the [GitHub OIDC provider](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services) to exist in the account — usually already created by **oku-api** `infra/`).
-2. Add repository **secrets**: `AWS_ROLE_ARN` (output `github_actions_deploy_role_arn`), `AWS_REGION`.
+1. In **Terraform**, set `github_repository` to `danielraban/oku-web` and `terraform apply` (requires the [GitHub OIDC provider](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services) to exist in the account — usually already created by **oku-api** `infra/`).
+2. Add repository **secrets**:
+   - **`AWS_ROLE_ARN`**: `arn:aws:iam::519749210432:role/oku-web-github-actions` (same as `terraform output -raw github_actions_deploy_role_arn`).
+   - **`AWS_REGION`**: optional; the workflow defaults to `eu-west-2` if unset.
 3. Add repository **variables**: `S3_BUCKET` (output `s3_bucket_name`), `CLOUDFRONT_DISTRIBUTION_ID` (output `cloudfront_distribution_id`), `NEXT_PUBLIC_OKU_API_URL` (your public API base URL, no trailing slash).
 
 Pushing (or merging) to **`main`** runs `.github/workflows/deploy-production.yml`: `npm ci`, `npm run build`, `aws s3 sync`, CloudFront invalidation.

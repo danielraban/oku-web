@@ -19,6 +19,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # OIDC: the IAM role's trust policy must allow THIS repo (sub = repo:OWNER/oku-web:ref:refs/heads/main).
+      # Do not reuse oku-api's deploy role — use Terraform output github_actions_deploy_role_arn after
+      # setting github_repository in infra/terraform.tfvars and applying.
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
