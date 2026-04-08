@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Oku — Marketing Site
 
-## Getting Started
+Landing page for the Oku mental health app. Built with Next.js, Tailwind CSS, and the Serenity colour system.
 
-First, run the development server:
+## Local development
 
 ```bash
+npm install
+cp .env.example .env.local
+# Set NEXT_PUBLIC_OKU_API_URL to your local or staging API (waitlist form)
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Pages
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/` — Marketing landing page
+- `/wellbeing` — NHS Every Mind Matters **Mind Plan** quiz embedded via iframe (if NHS blocks framing in your browser, open the quiz directly on [nhs.uk](https://www.nhs.uk/every-mind-matters/mental-wellbeing-tips/your-mind-plan-quiz/))
 
-## Learn More
+## Deploy to AWS (S3 + CloudFront)
 
-To learn more about Next.js, take a look at the following resources:
+The app is built as a **static export** (`output: 'export'`) and synced to S3 in front of CloudFront. See **[infra/README.md](infra/README.md)** for Terraform and **[scripts/deploy-aws.sh](scripts/deploy-aws.sh)** for uploads.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Apply Terraform in `infra/` (bucket + distribution).
+2. Build with `NEXT_PUBLIC_OKU_API_URL` pointing at your **oku-api** (includes `POST /marketing/waitlist`).
+3. Run `scripts/deploy-aws.sh` with `S3_BUCKET` and `CLOUDFRONT_ID` from Terraform outputs.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Custom domains need an **ACM certificate in `us-east-1`** (CloudFront requirement).
 
-## Deploy on Vercel
+## Theme
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The site uses the **Serenity** colour palette (shared with the mobile app). Light and dark modes are toggled via the navbar switch, powered by `next-themes`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Tech stack
+
+- **Next.js** (App Router, static export for AWS)
+- **Tailwind CSS v4** with custom theme tokens
+- **next-themes** for light/dark/system toggle
+- Waitlist: `fetch` to **oku-api** `POST /marketing/waitlist` (stored in Postgres)
