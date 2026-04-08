@@ -6,6 +6,8 @@ data "aws_iam_openid_connect_provider" "github" {
   url = "https://token.actions.githubusercontent.com"
 }
 
+data "aws_caller_identity" "current" {}
+
 resource "aws_iam_role" "github_actions_web" {
   count = var.github_repository != "" ? 1 : 0
   name  = "${var.project_name}-github-actions"
@@ -53,10 +55,12 @@ resource "aws_iam_role_policy" "github_actions_web_sync" {
         ]
       },
       {
-        Sid      = "InvalidateCache"
-        Effect   = "Allow"
-        Action   = "cloudfront:CreateInvalidation"
-        Resource = aws_cloudfront_distribution.site.arn
+        Sid    = "InvalidateCache"
+        Effect = "Allow"
+        Action = "cloudfront:CreateInvalidation"
+        # Wildcard so GitHub var CLOUDFRONT_DISTRIBUTION_ID always matches IAM (same account).
+        # Scoped to this account only; OIDC already limits who can assume the role.
+        Resource = "arn:aws:cloudfront::${data.aws_caller_identity.current.account_id}:distribution/*"
       },
     ]
   })
