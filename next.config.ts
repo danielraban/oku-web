@@ -3,6 +3,8 @@ import type { NextConfig } from "next";
 /** Static export for S3 + CloudFront (see infra/). */
 const nextConfig: NextConfig = {
   output: "export",
+  // S3 + CloudFront need folder/index.html so /privacy/ maps to an object; flat .html at root breaks /privacy URLs.
+  trailingSlash: true,
   async headers() {
     return [
       {

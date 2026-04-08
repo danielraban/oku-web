@@ -144,7 +144,7 @@ export default function TermsPage() {
             <li>
               AI conversations are encrypted and processed in accordance with our{" "}
               <a
-                href="/privacy"
+                href="/privacy/"
                 className="text-primary underline underline-offset-2 hover:text-primary-dark"
               >
                 Privacy Policy
@@ -327,7 +327,7 @@ export default function TermsPage() {
             You may delete your account at any time through the app settings. Upon
             deletion, your personal data will be handled in accordance with our{" "}
             <a
-              href="/privacy"
+              href="/privacy/"
               className="text-primary underline underline-offset-2 hover:text-primary-dark"
             >
               Privacy Policy

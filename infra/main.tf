@@ -48,6 +48,14 @@ resource "aws_cloudfront_origin_access_control" "site" {
   signing_protocol                  = "sigv4"
 }
 
+resource "aws_cloudfront_function" "site_url_rewrite" {
+  name    = "${var.project_name}-url-rewrite"
+  runtime = "cloudfront-js-1.0"
+  publish = true
+  comment = "Rewrite /privacy to /privacy/index.html for Next.js static export on S3"
+  code    = file("${path.module}/cloudfront-function-url-rewrite.js")
+}
+
 resource "aws_cloudfront_distribution" "site" {
   enabled             = true
   is_ipv6_enabled     = true
@@ -67,6 +75,11 @@ resource "aws_cloudfront_distribution" "site" {
     target_origin_id       = "s3-${var.bucket_name}"
     viewer_protocol_policy = "redirect-to-https"
     compress               = true
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.site_url_rewrite.arn
+    }
 
     forwarded_values {
       query_string = false

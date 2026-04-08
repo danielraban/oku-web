@@ -2,6 +2,8 @@
 
 This stack hosts the static Next.js export (`output: 'export'`) from the parent directory.
 
+**Pretty URLs:** S3 + CloudFront (REST API) do not resolve `/privacy` to a file. The repo sets `trailingSlash: true` in Next.js (outputs `privacy/index.html`, etc.) and Terraform attaches a **viewer-request CloudFront Function** that rewrites extensionless paths to `*/index.html`. Run `terraform apply` so that function is deployed; then redeploy the site.
+
 ## One-time setup
 
 1. **ACM certificate (optional, for a custom domain)**  

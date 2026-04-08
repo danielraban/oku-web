@@ -11,10 +11,10 @@ export default function Footer() {
           </div>
 
           <div className="flex gap-8 text-sm text-foreground-secondary">
-            <a href="/privacy" className="hover:text-foreground transition-colors">
+            <a href="/privacy/" className="hover:text-foreground transition-colors">
               Privacy
             </a>
-            <a href="/terms" className="hover:text-foreground transition-colors">
+            <a href="/terms/" className="hover:text-foreground transition-colors">
               Terms
             </a>
             <a
@@ -23,7 +23,7 @@ export default function Footer() {
             >
               Contact
             </a>
-            <a href="/wellbeing" className="hover:text-foreground transition-colors">
+            <a href="/wellbeing/" className="hover:text-foreground transition-colors">
               NHS Mind Plan
             </a>
           </div>
