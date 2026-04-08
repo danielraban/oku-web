@@ -23,7 +23,8 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          # Required by configure-aws-credentials. Set secret or variable AWS_REGION to override (default: eu-west-2, matches infra/terraform.tfvars)
+          aws-region: ${{ secrets.AWS_REGION || vars.AWS_REGION || 'eu-west-2' }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
