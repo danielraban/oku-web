@@ -1,0 +1,50 @@
+name: Deploy marketing site (S3 + CloudFront)
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: deploy-production-web
+  cancel-in-progress: false
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static site
+        env:
+          NEXT_PUBLIC_OKU_API_URL: ${{ vars.NEXT_PUBLIC_OKU_API_URL }}
+        run: npm run build
+
+      - name: Sync to S3
+        env:
+          S3_BUCKET: ${{ vars.S3_BUCKET }}
+        run: aws s3 sync out/ "s3://${S3_BUCKET}/" --delete
+
+      - name: Invalidate CloudFront
+        env:
+          CLOUDFRONT_ID: ${{ vars.CLOUDFRONT_DISTRIBUTION_ID }}
+        run: aws cloudfront create-invalidation --distribution-id "$CLOUDFRONT_ID" --paths "/*"

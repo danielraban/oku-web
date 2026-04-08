@@ -1,26 +1,119 @@
 @import "tailwindcss";
 
+/* ── Serenity Light Theme (default) ─────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F7F5F2;
+  --background-subtle: #EFE9E1;
+  --foreground: #2D3142;
+  --foreground-secondary: #6B7280;
+  --foreground-muted: #9CA3AF;
+
+  --surface: #FFFFFF;
+  --surface-raised: #F7F5F2;
+  --border: #E5E1DB;
+  --border-strong: #C8C3BB;
+
+  --primary: #5B8A8B;
+  --primary-light: #A8D5D6;
+  --primary-dark: #3D6667;
+  --primary-subtle: #D6EDED;
+  --on-primary: #FFFFFF;
+
+  --secondary: #7C6FA0;
+  --secondary-light: #C5B8E3;
+  --secondary-subtle: #EAE5F5;
+  --on-secondary: #FFFFFF;
+
+  --accent: #E8896A;
+  --accent-light: #F5C4B2;
+  --accent-subtle: #FDEAE3;
+  --on-accent: #FFFFFF;
+
+  --success: #6BAB8B;
+  --warning: #D4A853;
+  --error: #C97070;
+}
+
+/* ── Serenity Dark Theme ("Nightfall") ──────────────────────── */
+.dark {
+  --background: #1A1D2E;
+  --background-subtle: #1E2130;
+  --foreground: #EEE8E0;
+  --foreground-secondary: #B0AABE;
+  --foreground-muted: #6B6880;
+
+  --surface: #242736;
+  --surface-raised: #2E3144;
+  --border: #383B52;
+  --border-strong: #4A4D66;
+
+  --primary: #7DBEBF;
+  --primary-light: #A8D5D6;
+  --primary-dark: #5B8A8B;
+  --primary-subtle: rgba(125, 190, 191, 0.15);
+  --on-primary: #1A1D2E;
+
+  --secondary: #9D8EC4;
+  --secondary-light: #C5B8E3;
+  --secondary-subtle: rgba(157, 142, 196, 0.15);
+  --on-secondary: #1A1D2E;
+
+  --accent: #F0A085;
+  --accent-light: #F5C4B2;
+  --accent-subtle: rgba(240, 160, 133, 0.15);
+  --on-accent: #1A1D2E;
+
+  --success: #7DC4A0;
+  --warning: #E8C06A;
+  --error: #E08A8A;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-background-subtle: var(--background-subtle);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-foreground-secondary: var(--foreground-secondary);
+  --color-foreground-muted: var(--foreground-muted);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-subtle: var(--primary-subtle);
+  --color-on-primary: var(--on-primary);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-light: var(--secondary-light);
+  --color-secondary-subtle: var(--secondary-subtle);
+  --color-on-secondary: var(--on-secondary);
+
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-accent-subtle: var(--accent-subtle);
+  --color-on-accent: var(--on-accent);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+
+  --font-sans: var(--font-outfit);
+  --font-mono: var(--font-geist-mono);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-outfit), system-ui, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Smooth transitions for theme switching */
+*,
+*::before,
+*::after {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.15s ease;
 }
