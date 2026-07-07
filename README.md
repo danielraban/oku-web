@@ -7,7 +7,8 @@ Landing page for the Oku mental health app. Built with Next.js, Tailwind CSS, an
 ```bash
 npm install
 cp .env.example .env.local
-# Set NEXT_PUBLIC_OKU_API_URL to your local or staging API (waitlist form)
+# Pull DATABASE_URL from Vercel after adding the Neon integration:
+# vercel env pull .env.local
 npm run dev
 ```
 
@@ -18,15 +19,26 @@ Open [http://localhost:3000](http://localhost:3000).
 - `/` — Marketing landing page
 - `/wellbeing` — NHS Every Mind Matters **Mind Plan** quiz embedded via iframe (if NHS blocks framing in your browser, open the quiz directly on [nhs.uk](https://www.nhs.uk/every-mind-matters/mental-wellbeing-tips/your-mind-plan-quiz/))
 
-## Deploy to AWS (S3 + CloudFront)
+## Deploy to Vercel
 
-The app is built as a **static export** (`output: 'export'`) and synced to S3 in front of CloudFront. See **[infra/README.md](infra/README.md)** for Terraform and **[scripts/deploy-aws.sh](scripts/deploy-aws.sh)** for uploads.
+The app is a standard Next.js app deployed on **[Vercel](https://vercel.com)**. The project is already linked (see `.vercel/`), so pushing to `main` triggers a production deployment automatically via Vercel's Git integration; other branches get preview deployments.
 
-1. Apply Terraform in `infra/` (bucket + distribution).
-2. Build with `NEXT_PUBLIC_OKU_API_URL` pointing at your **oku-api** (includes `POST /marketing/waitlist`).
-3. Run `scripts/deploy-aws.sh` with `S3_BUCKET` and `CLOUDFRONT_ID` from Terraform outputs.
+### Waitlist (early access signups)
 
-Custom domains need an **ACM certificate in `us-east-1`** (CloudFront requirement).
+Signups are stored in **Neon Postgres** via a Next.js API route (`POST /api/waitlist`).
+
+1. In the Vercel dashboard, open your project → **Storage** → **Create Database** → **Neon** (or run `vercel integration add neon`).
+2. Run the SQL in [`schema.sql`](schema.sql) in the Neon SQL editor to create the `waitlist` table.
+3. `DATABASE_URL` is injected automatically — no manual env var needed.
+4. Push to `main` (or run `vercel --prod`).
+
+To view signups: Vercel dashboard → Storage → your Neon database → **Data** tab, or query `SELECT * FROM waitlist ORDER BY created_at DESC` in the SQL editor.
+
+### Deploy
+
+To deploy manually from your machine, install the CLI (`npm i -g vercel`) and run `vercel` (preview) or `vercel --prod` (production).
+
+Custom domains are configured in the Vercel dashboard (Settings → Domains) — TLS certificates are provisioned automatically.
 
 ## Theme
 
@@ -34,7 +46,7 @@ The site uses the **Serenity** colour palette (shared with the mobile app). Ligh
 
 ## Tech stack
 
-- **Next.js** (App Router, static export for AWS)
+- **Next.js** (App Router, deployed on Vercel)
 - **Tailwind CSS v4** with custom theme tokens
 - **next-themes** for light/dark/system toggle
-- Waitlist: `fetch` to **oku-api** `POST /marketing/waitlist` (stored in Postgres)
+- Waitlist: `POST /api/waitlist` → Neon Postgres (`waitlist` table)

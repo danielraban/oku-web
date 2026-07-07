@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { getPublicApiBaseUrl } from "@/lib/api";
 
 export default function EarlyAccessForm() {
   const [success, setSuccess] = useState(false);
@@ -18,15 +17,9 @@ export default function EarlyAccessForm() {
       return;
     }
 
-    const base = getPublicApiBaseUrl();
-    if (!base) {
-      setError("Waitlist is not configured. Set NEXT_PUBLIC_OKU_API_URL.");
-      return;
-    }
-
     setIsPending(true);
     try {
-      const res = await fetch(`${base}/marketing/waitlist`, {
+      const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
