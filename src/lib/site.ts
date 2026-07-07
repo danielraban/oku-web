@@ -4,11 +4,18 @@ export const SITE = {
   url: "https://okuwellness.com",
   tagline: "Your mind deserves a gentle space",
   description:
-    "A mental health companion for mood tracking, focus sessions, medication reminders, journaling, and community support. Join the early access waitlist.",
+    "Oku is an AI-powered mental health companion offering 24/7 supportive conversations, mood tracking, focus sessions, medication reminders, and journaling. Join the UK early access waitlist.",
+  // Shorter, keyword-forward summary used for social cards and structured data.
+  shortDescription:
+    "AI mental health support, mood tracking, and journaling — in one gentle app. Join the UK waitlist.",
   email: {
     hello: "hello@okuwellness.com",
     privacy: "privacy@okuwellness.com",
   },
+  // Public profiles for schema.org `sameAs`. Add real URLs as accounts go live.
+  social: {} as { twitter?: string; instagram?: string; linkedin?: string },
+  // Twitter/X handle (including @) for Twitter card attribution, if any.
+  twitterHandle: "" as string,
   // Base number added to the live waitlist count for social proof.
   waitlistBaseCount: 1200,
 } as const;
