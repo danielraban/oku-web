@@ -3,6 +3,17 @@ import { getSql } from "@/lib/db";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+async function ensureWaitlistTable() {
+  const sql = getSql();
+  await sql`
+    CREATE TABLE IF NOT EXISTS waitlist (
+      id         SERIAL PRIMARY KEY,
+      email      VARCHAR(255) UNIQUE NOT NULL,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `;
+}
+
 export async function POST(request: Request) {
   let body: unknown;
   try {
@@ -27,6 +38,7 @@ export async function POST(request: Request) {
   }
 
   try {
+    await ensureWaitlistTable();
     const sql = getSql();
     await sql`
       INSERT INTO waitlist (email)

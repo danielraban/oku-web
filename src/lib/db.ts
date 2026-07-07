@@ -12,29 +12,31 @@ let cached: NeonQueryFunction<false, false> | null = null;
 
 function getDatabaseUrl(): string {
   const url =
-    process.env.DATABASE_URL ??
     process.env.POSTGRES_URL ??
+    process.env.DATABASE_URL ??
     process.env.POSTGRES_PRISMA_URL;
 
   if (!url) {
     throw new Error("DATABASE_URL is not set");
   }
 
-  // Neon + Vercel often set DATABASE_URL to the `postgres` database while app
-  // tables (e.g. waitlist) live in the project database (`neondb`).
-  const database =
+  const preferredDb =
     process.env.POSTGRES_DATABASE?.trim() ||
-    process.env.PGDATABASE?.trim();
-
-  if (!database || database === "postgres") {
-    return url;
-  }
+    process.env.PGDATABASE?.trim() ||
+    "neondb";
 
   try {
     const parsed = new URL(url.replace(/^postgresql:/, "postgres:"));
     const pathDb = parsed.pathname.replace(/^\//, "");
-    if (!pathDb || pathDb === "postgres") {
-      parsed.pathname = `/${database}`;
+
+    // Neon + Vercel often set DATABASE_URL to the empty `postgres` database
+    // while app tables (e.g. waitlist) live in `neondb`.
+    if (
+      parsed.hostname.includes(".neon.tech") &&
+      (!pathDb || pathDb === "postgres")
+    ) {
+      const target = preferredDb !== "postgres" ? preferredDb : "neondb";
+      parsed.pathname = `/${target}`;
       return parsed.toString().replace(/^postgres:/, "postgresql:");
     }
   } catch {
