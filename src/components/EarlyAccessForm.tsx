@@ -2,10 +2,17 @@
 
 import { useState, FormEvent } from "react";
 
+const PLATFORMS = [
+  { value: "ios", label: "iOS" },
+  { value: "android", label: "Android" },
+  { value: "both", label: "Both" },
+] as const;
+
 export default function EarlyAccessForm() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
+  const [platform, setPlatform] = useState<string>("both");
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -22,7 +29,7 @@ export default function EarlyAccessForm() {
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, platform }),
       });
       const data = (await res.json().catch(() => ({}))) as { message?: string };
 
@@ -40,7 +47,7 @@ export default function EarlyAccessForm() {
   }
 
   return (
-    <section id="early-access" className="py-24 px-6">
+    <section id="early-access" className="py-24 px-6 scroll-mt-16">
       <div className="max-w-2xl mx-auto text-center">
         <h2 className="text-3xl md:text-4xl font-bold text-foreground">
           Get early access
@@ -81,6 +88,30 @@ export default function EarlyAccessForm() {
                 {isPending ? "Joining..." : "Join Waitlist"}
               </button>
             </div>
+
+            <fieldset className="mt-5">
+              <legend className="text-sm text-foreground-secondary mb-2">
+                Which platform are you on?
+              </legend>
+              <div className="inline-flex rounded-full border border-border bg-surface p-1">
+                {PLATFORMS.map((p) => (
+                  <button
+                    key={p.value}
+                    type="button"
+                    onClick={() => setPlatform(p.value)}
+                    aria-pressed={platform === p.value}
+                    className={`px-5 py-2 rounded-full text-sm font-medium transition-colors ${
+                      platform === p.value
+                        ? "bg-primary text-on-primary"
+                        : "text-foreground-secondary hover:text-foreground"
+                    }`}
+                  >
+                    {p.label}
+                  </button>
+                ))}
+              </div>
+            </fieldset>
+
             {error && (
               <p className="mt-3 text-sm text-error">{error}</p>
             )}

@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import { Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import ThemeProvider from "@/components/ThemeProvider";
+import { SITE } from "@/lib/site";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -16,23 +18,40 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Oku — Your mind deserves a gentle space",
-  description:
-    "A mental health companion for mood tracking, focus sessions, medication reminders, journaling, and community support. Join the early access waitlist.",
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: `${SITE.name} — ${SITE.tagline}`,
+    template: `%s | ${SITE.name}`,
+  },
+  description: SITE.description,
+  applicationName: SITE.name,
   keywords: [
-    "mental health",
+    "mental health app",
     "mood tracking",
     "focus timer",
     "medication reminders",
     "journaling",
+    "AI wellness companion",
+    "mental wellbeing UK",
     "wellness app",
   ],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "Oku — Your mind deserves a gentle space",
-    description:
-      "A mental health companion for mood tracking, focus sessions, medication reminders, and more.",
+    title: `${SITE.name} — ${SITE.tagline}`,
+    description: SITE.description,
+    url: SITE.url,
+    siteName: SITE.name,
+    locale: "en_GB",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE.name} — ${SITE.tagline}`,
+    description: SITE.description,
+  },
+  category: "health",
 };
 
 export default function RootLayout({
@@ -48,6 +67,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen flex flex-col antialiased">
         <ThemeProvider>{children}</ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );

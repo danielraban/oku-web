@@ -29,7 +29,7 @@ export default function TermsPage() {
           </h2>
           <p className="text-foreground-secondary">
             These Terms of Service (&quot;Terms&quot;) govern your use of the Oku
-            website (https://oku-web-nu.vercel.app), the Oku mobile application,
+            website (https://okuwellness.com), the Oku mobile application,
             and all related services (collectively, the &quot;Service&quot;). By
             accessing or using the Service, you agree to be bound by these Terms.
           </p>
@@ -387,10 +387,10 @@ export default function TermsPage() {
           <p className="text-foreground-secondary">
             Email:{" "}
             <a
-              href="mailto:hello@okuapp.co.uk"
+              href="mailto:hello@okuwellness.com"
               className="text-primary underline underline-offset-2 hover:text-primary-dark"
             >
-              hello@okuapp.co.uk
+              hello@okuwellness.com
             </a>
           </p>
         </section>

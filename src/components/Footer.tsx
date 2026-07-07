@@ -18,7 +18,7 @@ export default function Footer() {
               Terms
             </a>
             <a
-              href="mailto:hello@okuapp.co.uk"
+              href="mailto:hello@okuwellness.com"
               className="hover:text-foreground transition-colors"
             >
               Contact

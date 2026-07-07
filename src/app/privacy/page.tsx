@@ -29,11 +29,11 @@ export default function PrivacyPage() {
             Oku is a mental health companion app operated by Oku (&quot;we&quot;,
             &quot;us&quot;, &quot;our&quot;). Our marketing website is located at{" "}
             <a
-              href="https://oku-web-nu.vercel.app"
+              href="https://okuwellness.com"
               className="text-primary underline underline-offset-2 hover:text-primary-dark"
               rel="noopener noreferrer"
             >
-              https://oku-web-nu.vercel.app
+              https://okuwellness.com
             </a>
             . This Privacy Policy explains how we collect, use, store, and protect
             your personal data when you visit our website, join our waitlist, or use
@@ -42,10 +42,10 @@ export default function PrivacyPage() {
           <p className="text-foreground-secondary">
             For enquiries about this policy, contact us at:{" "}
             <a
-              href="mailto:privacy@okuapp.co.uk"
+              href="mailto:privacy@okuwellness.com"
               className="text-primary underline underline-offset-2 hover:text-primary-dark"
             >
-              privacy@okuapp.co.uk
+              privacy@okuwellness.com
             </a>
             .
           </p>
@@ -322,10 +322,10 @@ export default function PrivacyPage() {
           <p className="text-foreground-secondary">
             To exercise any of these rights, contact us at{" "}
             <a
-              href="mailto:privacy@okuapp.co.uk"
+              href="mailto:privacy@okuwellness.com"
               className="text-primary underline underline-offset-2 hover:text-primary-dark"
             >
-              privacy@okuapp.co.uk
+              privacy@okuwellness.com
             </a>
             . We will respond within one month.
           </p>
@@ -386,10 +386,10 @@ export default function PrivacyPage() {
           <p className="text-foreground-secondary">
             Email:{" "}
             <a
-              href="mailto:privacy@okuapp.co.uk"
+              href="mailto:privacy@okuwellness.com"
               className="text-primary underline underline-offset-2 hover:text-primary-dark"
             >
-              privacy@okuapp.co.uk
+              privacy@okuwellness.com
             </a>
           </p>
         </section>

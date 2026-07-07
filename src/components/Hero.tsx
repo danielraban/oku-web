@@ -1,14 +1,20 @@
+import StoreBadges from "./StoreBadges";
+
 export default function Hero() {
   return (
     <section className="relative pt-32 pb-24 px-6 overflow-hidden">
       {/* Gradient background */}
-      <div className="absolute inset-0 -z-10">
+      <div className="absolute inset-0 -z-10" aria-hidden="true">
         <div className="absolute top-0 left-1/4 w-96 h-96 rounded-full bg-primary-subtle opacity-60 blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-80 h-80 rounded-full bg-secondary-subtle opacity-50 blur-3xl" />
         <div className="absolute top-1/3 right-1/3 w-64 h-64 rounded-full bg-accent-subtle opacity-40 blur-3xl" />
       </div>
 
-      <div className="max-w-4xl mx-auto text-center">
+      <div className="max-w-4xl mx-auto text-center animate-fade-up">
+        <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-1.5 text-sm text-foreground-secondary mb-6">
+          <span className="w-2 h-2 rounded-full bg-success" aria-hidden="true" />
+          Now in early access · UK
+        </span>
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-[1.1]">
           Your mind deserves
           <br />
@@ -35,6 +41,8 @@ export default function Hero() {
             See Features
           </a>
         </div>
+
+        <StoreBadges className="mt-10 justify-center" />
       </div>
     </section>
   );
