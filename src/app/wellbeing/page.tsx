@@ -26,7 +26,7 @@ const RESOURCES = [
   },
   {
     title: "Lifting low mood",
-    href: "https://www.nhs.uk/every-mind-matters/mental-health-issues/low-mood-and-depression/",
+    href: "https://www.nhs.uk/every-mind-matters/mental-health-issues/low-mood/",
   },
 ];
 
