@@ -11,6 +11,9 @@ export default function Footer() {
           </div>
 
           <div className="flex gap-8 text-sm text-foreground-secondary">
+            <a href="/resources/" className="hover:text-foreground transition-colors">
+              Resources
+            </a>
             <a href="/privacy/" className="hover:text-foreground transition-colors">
               Privacy
             </a>
